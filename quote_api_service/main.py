@@ -1,13 +1,64 @@
-import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes import quotes
+from app.core.config import settings
 from app.database.database import engine, Base
+from app.routes.quotes import router as quotes_router
+from app.config.telemetry_config import setup_telemetry
 from app.config.logging_config import setup_logging
+import logging
+import contextvars
+import uuid
+from fastapi import Request
 
-# Setup logging before anything else
-setup_logging()
-logger = logging.getLogger(__name__)
+# Set up logging with OpenTelemetry trace and span IDs
+logger = setup_logging()
+
+
+app = FastAPI(
+    title=settings.PROJECT_NAME,
+    openapi_url=f"{settings.API_V1_STR}/openapi.json",
+    docs_url=f"{settings.API_V1_STR}/docs",
+    redoc_url=f"{settings.API_V1_STR}/redoc",
+)
+
+# Set up CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["X-Correlation-ID", "*"],  # Explicitly allow correlation ID header
+)
+
+# Set up correlation ID middleware (after CORS)
+correlation_id_ctx = contextvars.ContextVar("correlation_id", default="none")
+
+
+# Define a custom logging filter to add the correlation id to each log record
+class CorrelationIdFilter(logging.Filter):
+    def filter(self, record):
+        record.correlation_id = correlation_id_ctx.get()
+        return True
+
+
+# Attach the filter to the Uvicorn access logger
+access_logger = logging.getLogger("uvicorn.access")
+access_logger.addFilter(CorrelationIdFilter())
+
+app = FastAPI()
+
+
+# Middleware to extract or generate the correlation id and set it in the context variable
+@app.middleware("http")
+async def add_correlation_id(request: Request, call_next):
+    # Try to extract correlation id from the request header (or generate a new one)
+    cid = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
+    correlation_id_ctx.set(cid)
+    response = await call_next(request)
+    return response
+
+
+# app.add_middleware(CorrelationMiddleware)
 
 # Create database tables
 try:
@@ -17,40 +68,16 @@ except Exception as e:
     logger.error("Failed to create database tables", exc_info=True)
     raise
 
-app = FastAPI(
-    title="Quote API Service",
-    description="A service for managing quotes",
-    version="1.0.0",
-    docs_url="/api/docs",
-    redoc_url="/api/redoc",
-)
+# Set up OpenTelemetry - must be done before including routers
+tracer = setup_telemetry(app, engine)
 
-# Configure CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-logger.info("CORS middleware configured")
-
-# Include routers
-app.include_router(quotes.router, prefix="/api/v1", tags=["quotes"])
-logger.info("API routes registered")
+# Include API router
+app.include_router(quotes_router, prefix=settings.API_V1_STR)
 
 
 @app.get("/")
 async def root():
-    logger.debug("Root endpoint accessed")
-    return {"message": "Welcome to Quote API Service"}
-
-
-@app.on_event("startup")
-async def startup_event():
-    logger.info("Application startup", extra={"event": "startup"})
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    logger.info("Application shutdown", extra={"event": "shutdown"})
+    with tracer.start_as_current_span("root_endpoint") as span:
+        span.set_attribute("endpoint", "/")
+        logger.info("Root endpoint called")
+        return {"message": "Welcome to Quote API Service"}

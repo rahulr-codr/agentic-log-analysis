@@ -7,13 +7,36 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
-      - sqlite_data:/app/data
+      - ./data:/app/data
     environment:
+      - DATABASE_URL=sqlite:///./data/quotes.db
       - LOG_LEVEL=INFO
-      - DATABASE_URL=sqlite:///data/quotes.db
-    command: >
-      sh -c "mkdir -p /app/data &&
-             uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+      - OTEL_SERVICE_NAME=quote_api_service
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://lgtm:4317
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=quote_api_service
+      - OTEL_TRACES_SAMPLER=parentbased_always_on
+      - OTEL_METRICS_EXPORTER=otlp
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_LOGS_EXPORTER=otlp
+    depends_on:
+      - lgtm
+
+  lgtm:
+    image: grafana/otel-lgtm
+    ports:
+      - "3000:3000" # Grafana
+      - "3100:3100" # Loki
+      - "3200:3200" # Tempo
+      - "3300:3300" # Mimir
+      - "4317:4317" # OTLP gRPC
+      - "4318:4318" # OTLP HTTP
+      - "8888:8888" # Prometheus metrics
+    volumes:
+      - lgtm_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
 
 volumes:
-  sqlite_data:
+  lgtm_data:

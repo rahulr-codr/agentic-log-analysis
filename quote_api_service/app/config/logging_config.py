@@ -5,6 +5,8 @@ from typing import Any, Dict
 import json
 from fastapi.logger import logger as fastapi_logger
 from uvicorn.logging import AccessFormatter
+from opentelemetry import trace
+import contextvars
 
 
 class JSONFormatter(logging.Formatter):
@@ -16,7 +18,22 @@ class JSONFormatter(logging.Formatter):
             "module": record.module,
             "function": record.funcName,
             "line": record.lineno,
+            "correlation_id": record.correlation_id
+            if hasattr(record, "correlation_id")
+            else None,
         }
+
+        # Add OpenTelemetry attributes with correct names
+        if hasattr(record, "otelTraceID"):
+            trace_id = getattr(record, "otelTraceID")
+            if trace_id != "0":  # Only add if there's a valid trace
+                log_data["trace_id"] = trace_id
+        if hasattr(record, "otelSpanID"):
+            span_id = getattr(record, "otelSpanID")
+            if span_id != "0":  # Only add if there's a valid span
+                log_data["span_id"] = span_id
+        if hasattr(record, "otelTraceSampled"):
+            log_data["sampled"] = getattr(record, "otelTraceSampled")
 
         if hasattr(record, "extra"):
             log_data.update(record.extra)
@@ -52,13 +69,26 @@ class JSONAccessFormatter(AccessFormatter):
             "path": request_parts[1],
             "protocol": request_parts[2].replace('"', ""),
             "status_code": request_parts[3],
+            "correlation_id": record.correlation_id,
         }
+
+        # Add OpenTelemetry attributes with correct names
+        if hasattr(record, "otelTraceID"):
+            trace_id = getattr(record, "otelTraceID")
+            if trace_id != "0":  # Only add if there's a valid trace
+                log_data["trace_id"] = trace_id
+        if hasattr(record, "otelSpanID"):
+            span_id = getattr(record, "otelSpanID")
+            if span_id != "0":  # Only add if there's a valid span
+                log_data["span_id"] = span_id
+        if hasattr(record, "otelTraceSampled"):
+            log_data["sampled"] = getattr(record, "otelTraceSampled")
 
         return json.dumps(log_data)
 
 
-def setup_logging(level: str = None) -> None:
-    """Configure logging with JSON formatting and appropriate handlers."""
+def setup_logging(level: str = None) -> logging.Logger:
+    """Configure logging with JSON formatting and OpenTelemetry trace and span IDs."""
     # Get log level from environment variable or use default
     log_level = level or os.getenv("LOG_LEVEL", "INFO")
 
@@ -67,9 +97,10 @@ def setup_logging(level: str = None) -> None:
     root_logger.setLevel(log_level)
     root_logger.handlers = []
 
-    # Console handler with JSON formatting
-    console_handler = logging.StreamHandler(sys.stdout)
-    console_handler.setFormatter(JSONFormatter())
+    # Create console handler with JSON formatter
+    console_handler = logging.StreamHandler()
+    formatter = JSONFormatter()
+    console_handler.setFormatter(formatter)
     root_logger.addHandler(console_handler)
 
     # Configure FastAPI logger
@@ -90,3 +121,5 @@ def setup_logging(level: str = None) -> None:
         "Logging system initialized",
         extra={"service": "quote_api_service", "log_level": log_level},
     )
+
+    return root_logger

@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "quote-api-service"
+version = "0.1.0"
+description = "A service for managing quotes"
+authors = ["Your Name <your.email@example.com>"]
+packages = [
+    { include = "app" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "0.109.2"
+uvicorn = "0.27.1"
+sqlalchemy = "2.0.27"
+pydantic = "^2.7.0"
+pydantic-settings = "2.8.1"
+python-dotenv = "1.0.1"
+alembic = "1.13.1"
+opentelemetry-api = "1.21.0"
+opentelemetry-sdk = "1.21.0"
+opentelemetry-semantic-conventions = "0.42b0"
+opentelemetry-instrumentation-fastapi = "0.42b0"
+opentelemetry-instrumentation-sqlalchemy = "0.42b0"
+opentelemetry-exporter-otlp = "1.21.0"
+opentelemetry-instrumentation-logging = "0.42b0"
+opentelemetry-instrumentation = "0.42b0"
+opentelemetry-propagator-b3 = "1.21.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "8.0.0"
+httpx = "0.26.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
