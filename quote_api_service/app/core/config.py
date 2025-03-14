@@ -9,6 +9,8 @@ class Settings(BaseSettings):
     PORT: int = 8000
     RELOAD: bool = True
     LOG_LEVEL: str = "INFO"
+    ENVIRONMENT: str = "dev"
+    VERSION: str = "1.0.0"
 
     # Database settings
     DATABASE_URL: str = "sqlite:///./quotes.db"
@@ -21,4 +23,4 @@ class Settings(BaseSettings):
         env_file = ".env"
 
 
-settings = Settings() 
+settings = Settings()

@@ -16,11 +16,11 @@ from opentelemetry.trace.propagation.tracecontext import TraceContextTextMapProp
 from fastapi import FastAPI
 from sqlalchemy.engine import Engine
 from app.core.config import settings
+from app.config.logging_config import setup_logging
 
 
-def setup_telemetry(app: FastAPI, engine: Engine) -> None:
+def setup_telemetry(app: FastAPI, engine: Engine = None) -> None:
     """Set up OpenTelemetry with automatic instrumentation."""
-
     # Set up W3C TraceContext propagator for distributed tracing
     set_global_textmap(TraceContextTextMapPropagator())
 
@@ -38,6 +38,9 @@ def setup_telemetry(app: FastAPI, engine: Engine) -> None:
     # Set the tracer provider
     trace.set_tracer_provider(provider)
 
+    # Set up logging with OTLP
+    setup_logging(resource)
+
     # Set up automatic instrumentation
     FastAPIInstrumentor.instrument_app(
         app,
@@ -45,10 +48,11 @@ def setup_telemetry(app: FastAPI, engine: Engine) -> None:
         excluded_urls="health,metrics",  # Exclude health check endpoints
     )
 
-    SQLAlchemyInstrumentor().instrument(
-        engine=engine,
-        tracer_provider=provider,
-    )
+    if engine is not None:
+        SQLAlchemyInstrumentor().instrument(
+            engine=engine,
+            tracer_provider=provider,
+        )
 
     LoggingInstrumentor().instrument(
         tracer_provider=provider,

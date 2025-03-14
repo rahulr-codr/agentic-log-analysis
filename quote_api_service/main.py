@@ -5,14 +5,22 @@ from app.database.database import engine, Base
 from app.routes.quotes import router as quotes_router
 from app.config.telemetry_config import setup_telemetry
 from app.config.logging_config import setup_logging
-import logging
-import contextvars
+
 import uuid
 from fastapi import Request
 from app.config.common import CorrelationIdFilter, correlation_id_ctx
+from opentelemetry.sdk.resources import Resource
 
-# Set up logging with OpenTelemetry trace and span IDs
-logger = setup_logging()
+resource = Resource.create(
+    {
+        "service.name": settings.PROJECT_NAME,
+        "environment": settings.ENVIRONMENT,  # e.g., "production", "staging"
+        "version": settings.VERSION,
+        # ... other attributes
+    }
+)
+
+logger = setup_logging(resource)
 
 
 app = FastAPI(
