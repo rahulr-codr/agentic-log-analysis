@@ -1,0 +1,422 @@
+{
+    "products": {
+        "software": [
+            {
+                "id": "PROD-001",
+                "name": "Enterprise Software Suite",
+                "type": "software",
+                "category": "business_applications",
+                "description": "Comprehensive enterprise software solution with advanced features",
+                "status": "active",
+                "editions": [
+                    {
+                        "name": "enterprise",
+                        "features": [
+                            "Advanced Analytics",
+                            "Custom Workflows",
+                            "Enterprise Security",
+                            "API Access",
+                            "24/7 Support"
+                        ],
+                        "min_users": 25,
+                        "max_users": 10000,
+                        "storage_included": "1TB"
+                    }
+                ],
+                "pricing": {
+                    "base_price": 199.99,
+                    "unit": "per_user_month",
+                    "volume_discounts": [
+                        {
+                            "min_quantity": 50,
+                            "discount_percentage": 10
+                        },
+                        {
+                            "min_quantity": 100,
+                            "discount_percentage": 15
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "PROD-002",
+                "name": "Premium Support Package",
+                "type": "support",
+                "category": "services",
+                "description": "Premium support package with guaranteed response times",
+                "status": "active",
+                "features": [
+                    "24/7 Support Access",
+                    "4-Hour Response Time",
+                    "Dedicated Support Engineer",
+                    "Monthly Review Meetings"
+                ],
+                "pricing": {
+                    "base_price": 49.99,
+                    "unit": "per_user_month",
+                    "volume_discounts": [
+                        {
+                            "min_quantity": 50,
+                            "discount_percentage": 15
+                        }
+                    ]
+                }
+            }
+        ],
+        "hardware": [
+            {
+                "id": "HW-001",
+                "name": "PowerServer X1",
+                "type": "hardware",
+                "category": "servers",
+                "description": "High-performance enterprise server with latest Intel processors",
+                "status": "active",
+                "specifications": {
+                    "processor": "Intel Xeon 8380",
+                    "ram_options": [
+                        "256GB",
+                        "512GB",
+                        "1TB"
+                    ],
+                    "storage_options": [
+                        "4TB",
+                        "8TB",
+                        "16TB"
+                    ],
+                    "form_factor": "2U",
+                    "power_supply": "Redundant 1200W"
+                },
+                "pricing": {
+                    "base_price": 5999.99,
+                    "warranty_options": [
+                        {
+                            "duration": "3 years",
+                            "price": 0
+                        },
+                        {
+                            "duration": "5 years",
+                            "price": 999.99
+                        }
+                    ]
+                }
+            },
+            {
+                "id": "HW-002",
+                "name": "StorageArray S2",
+                "type": "hardware",
+                "category": "storage",
+                "description": "Enterprise storage array with high-speed connectivity",
+                "status": "active",
+                "specifications": {
+                    "capacity_options": [
+                        "50TB",
+                        "100TB",
+                        "200TB"
+                    ],
+                    "raid_support": [
+                        "RAID-5",
+                        "RAID-6",
+                        "RAID-10"
+                    ],
+                    "connectivity": [
+                        "10GbE",
+                        "40GbE"
+                    ],
+                    "form_factor": "4U"
+                },
+                "pricing": {
+                    "base_price": 8999.99,
+                    "installation_included": true
+                }
+            },
+            {
+                "id": "HW-003",
+                "name": "SecurityGateway X4",
+                "type": "hardware",
+                "category": "security",
+                "description": "Next-generation security gateway with advanced threat protection",
+                "status": "active",
+                "specifications": {
+                    "throughput": "40Gbps",
+                    "concurrent_sessions": 10000000,
+                    "interfaces": [
+                        "10GbE",
+                        "40GbE"
+                    ],
+                    "redundancy": [
+                        "active-passive",
+                        "active-active"
+                    ],
+                    "form_factor": "1U"
+                },
+                "pricing": {
+                    "base_price": 25000.00,
+                    "subscription_required": true
+                }
+            }
+        ],
+        "subscriptions": [
+            {
+                "id": "SUB-001",
+                "name": "Cloud Platform Enterprise",
+                "type": "subscription",
+                "category": "cloud_services",
+                "description": "Enterprise cloud platform with comprehensive feature set",
+                "status": "active",
+                "features": {
+                    "tiers": [
+                        {
+                            "name": "enterprise",
+                            "features": [
+                                "analytics",
+                                "automation",
+                                "security"
+                            ],
+                            "sla": "99.99%",
+                            "support": "24/7"
+                        }
+                    ],
+                    "usage_limits": {
+                        "api_calls": 1000000,
+                        "storage_gb": 5000,
+                        "users": 1000
+                    }
+                },
+                "pricing": {
+                    "base_price": 25.00,
+                    "unit": "per_user_month",
+                    "minimum_term": 12,
+                    "billing_frequency": [
+                        "monthly",
+                        "annual"
+                    ]
+                }
+            }
+        ],
+        "add_ons": [
+            {
+                "id": "ADD-001",
+                "name": "Advanced Security Module",
+                "type": "add_on",
+                "category": "security",
+                "description": "Enhanced security features for cloud platform",
+                "status": "active",
+                "features": {
+                    "retention_days": [
+                        30,
+                        60,
+                        90
+                    ],
+                    "compliance_features": [
+                        "audit_logs",
+                        "encryption",
+                        "access_control"
+                    ]
+                },
+                "pricing": {
+                    "base_price": 5.00,
+                    "unit": "per_user_month"
+                }
+            },
+            {
+                "id": "ADD-002",
+                "name": "Dedicated Support Team",
+                "type": "add_on",
+                "category": "support",
+                "description": "Dedicated support team allocation",
+                "status": "active",
+                "features": {
+                    "team_size_options": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "coverage": "24/7",
+                    "response_time": "15 minutes"
+                },
+                "pricing": {
+                    "base_price": 2000.00,
+                    "unit": "per_month"
+                }
+            }
+        ],
+        "services": [
+            {
+                "id": "SVC-001",
+                "name": "Hardware Installation Service",
+                "type": "service",
+                "category": "professional_services",
+                "description": "Professional hardware installation service",
+                "status": "active",
+                "delivery": {
+                    "type": "onsite",
+                    "duration_days": 5,
+                    "team_size": 2
+                },
+                "pricing": {
+                    "base_price": 15000.00,
+                    "unit": "per_project"
+                }
+            },
+            {
+                "id": "SVC-002",
+                "name": "Security Implementation Service",
+                "type": "service",
+                "category": "professional_services",
+                "description": "Enterprise security solution implementation",
+                "status": "active",
+                "delivery": {
+                    "type": "hybrid",
+                    "duration_weeks": 12,
+                    "team_size": 3,
+                    "phases": [
+                        "planning",
+                        "deployment",
+                        "testing",
+                        "handover"
+                    ]
+                },
+                "pricing": {
+                    "base_price": 75000.00,
+                    "unit": "per_project"
+                }
+            }
+        ],
+        "consulting": [
+            {
+                "id": "CONS-001",
+                "name": "Senior Consultant",
+                "type": "consulting",
+                "category": "professional_services",
+                "description": "Senior level consulting services",
+                "expertise": [
+                    "cloud",
+                    "architecture",
+                    "strategy"
+                ],
+                "pricing": {
+                    "base_price": 250.00,
+                    "unit": "per_hour",
+                    "minimum_hours": 40
+                }
+            },
+            {
+                "id": "CONS-002",
+                "name": "Technical Consultant",
+                "type": "consulting",
+                "category": "professional_services",
+                "description": "Technical consulting and implementation services",
+                "expertise": [
+                    "development",
+                    "integration",
+                    "testing"
+                ],
+                "pricing": {
+                    "base_price": 200.00,
+                    "unit": "per_hour",
+                    "minimum_hours": 80
+                }
+            },
+            {
+                "id": "CONS-003",
+                "name": "Project Manager",
+                "type": "consulting",
+                "category": "professional_services",
+                "description": "Project management services",
+                "expertise": [
+                    "agile",
+                    "delivery",
+                    "stakeholder-management"
+                ],
+                "pricing": {
+                    "base_price": 300.00,
+                    "unit": "per_hour",
+                    "minimum_hours": 20
+                }
+            }
+        ],
+        "security": [
+            {
+                "id": "SEC-001",
+                "name": "Enterprise Security Suite",
+                "type": "security",
+                "category": "software",
+                "description": "Comprehensive enterprise security solution",
+                "status": "active",
+                "features": {
+                    "modules": [
+                        "endpoint",
+                        "network",
+                        "cloud",
+                        "identity"
+                    ],
+                    "deployment_options": [
+                        "cloud",
+                        "on-premise",
+                        "hybrid"
+                    ],
+                    "compliance": [
+                        "SOC2",
+                        "ISO27001",
+                        "HIPAA"
+                    ]
+                },
+                "pricing": {
+                    "base_price": 150000.00,
+                    "unit": "per_year",
+                    "user_bands": [
+                        {
+                            "min_users": 1000,
+                            "max_users": 5000,
+                            "price_per_user": 30.00
+                        },
+                        {
+                            "min_users": 5001,
+                            "max_users": 10000,
+                            "price_per_user": 25.00
+                        }
+                    ]
+                }
+            }
+        ],
+        "training": [
+            {
+                "id": "TRN-001",
+                "name": "Security Administration",
+                "type": "training",
+                "category": "education",
+                "description": "Comprehensive security administration training",
+                "status": "active",
+                "delivery": {
+                    "methods": [
+                        "virtual",
+                        "in-person"
+                    ],
+                    "duration_days": 5,
+                    "materials": "included"
+                },
+                "pricing": {
+                    "base_price": 1500.00,
+                    "unit": "per_person",
+                    "volume_discounts": [
+                        {
+                            "min_participants": 10,
+                            "discount_percentage": 10
+                        },
+                        {
+                            "min_participants": 20,
+                            "discount_percentage": 20
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "metadata": {
+        "total_products": 14,
+        "categories": 8,
+        "last_updated": "2024-03-14T17:00:00Z",
+        "currency": "USD",
+        "version": "1.0"
+    }
+}
