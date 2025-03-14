@@ -24,7 +24,6 @@ opentelemetry-instrumentation-sqlalchemy = "0.42b0"
 opentelemetry-exporter-otlp = "1.21.0"
 opentelemetry-instrumentation-logging = "0.42b0"
 opentelemetry-instrumentation = "0.42b0"
-opentelemetry-propagator-b3 = "1.21.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "8.0.0"

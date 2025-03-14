@@ -8,6 +8,8 @@ from uvicorn.logging import AccessFormatter
 from opentelemetry import trace
 import contextvars
 
+from app.config.common import CorrelationIdFilter
+
 
 class JSONFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
@@ -91,29 +93,33 @@ def setup_logging(level: str = None) -> logging.Logger:
     """Configure logging with JSON formatting and OpenTelemetry trace and span IDs."""
     # Get log level from environment variable or use default
     log_level = level or os.getenv("LOG_LEVEL", "INFO")
-
+    correlation_id_filter = CorrelationIdFilter()
     # Configure root logger
     root_logger = logging.getLogger()
     root_logger.setLevel(log_level)
     root_logger.handlers = []
+    # root_logger.addFilter(correlation_id_filter)
 
     # Create console handler with JSON formatter
     console_handler = logging.StreamHandler()
+    console_handler.addFilter(correlation_id_filter)
     formatter = JSONFormatter()
     console_handler.setFormatter(formatter)
     root_logger.addHandler(console_handler)
-
     # Configure FastAPI logger
     fastapi_logger.setLevel(log_level)
     fastapi_logger.handlers = []
+    # fastapi_logger.addFilter(CorrelationIdFilter())
     fastapi_logger.addHandler(console_handler)
 
     # Configure uvicorn access logger
     access_logger = logging.getLogger("uvicorn.access")
     access_logger.setLevel(log_level)
+    # access_logger.addFilter(CorrelationIdFilter())
     access_logger.handlers = []
     access_handler = logging.StreamHandler(sys.stdout)
     access_handler.setFormatter(JSONAccessFormatter())
+    access_handler.addFilter(correlation_id_filter)
     access_logger.addHandler(access_handler)
 
     # Log startup message

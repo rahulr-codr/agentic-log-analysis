@@ -9,6 +9,7 @@ import logging
 import contextvars
 import uuid
 from fastapi import Request
+from app.config.common import CorrelationIdFilter, correlation_id_ctx
 
 # Set up logging with OpenTelemetry trace and span IDs
 logger = setup_logging()
@@ -31,19 +32,11 @@ app.add_middleware(
 )
 
 # Set up correlation ID middleware (after CORS)
-correlation_id_ctx = contextvars.ContextVar("correlation_id", default="none")
 
 
-# Define a custom logging filter to add the correlation id to each log record
-class CorrelationIdFilter(logging.Filter):
-    def filter(self, record):
-        record.correlation_id = correlation_id_ctx.get()
-        return True
-
-
-# Attach the filter to the Uvicorn access logger
-access_logger = logging.getLogger("uvicorn.access")
-access_logger.addFilter(CorrelationIdFilter())
+# # Attach the filter to the Uvicorn access logger
+# access_logger = logging.getLogger("uvicorn.access")
+# access_logger.addFilter(CorrelationIdFilter())
 
 app = FastAPI()
 
