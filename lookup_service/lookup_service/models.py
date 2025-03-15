@@ -39,10 +39,10 @@ class QuoteItem(BaseModel):
 
 
 class Totals(BaseModel):
-    subtotal: float
+    subtotal: Optional[float] = None
     discount_amount: Optional[float] = None
-    tax_amount: float
-    total: float
+    tax_amount: Optional[float] = None
+    total: Optional[float] = None
     shipping_amount: Optional[float] = None
     monthly_recurring: Optional[Dict[str, float]] = None
     total_contract_value: Optional[float] = None
