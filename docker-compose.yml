@@ -1,13 +1,20 @@
 version: '3.8'
 
 services:
+  lookup_service:
+    build: lookup_service
+    image: lookup_service
+    ports:
+      - "8001:80"
+    # volumes:
+    #   - ./lookup_service:/app
+    #   - ./lookup_service/data:/app/data
   api:
-    build: .
+    build: quote_api_service
     ports:
       - "8000:8000"
     volumes:
-      - .:/app
-      - ./data:/app/data
+      - ./quote_api_service/data:/app/data
     environment:
       - DATABASE_URL=sqlite:///./data/quotes.db
       - LOG_LEVEL=INFO
