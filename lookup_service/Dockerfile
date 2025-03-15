@@ -22,4 +22,4 @@ ENV PYTHONUNBUFFERED=1
 
 
 # Run the application.
-CMD ["/app/.venv/bin/opentelemetry-instrument", "/app/.venv/bin/uvicorn", "lookup_service.main:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["/app/.venv/bin/opentelemetry-instrument", "/app/.venv/bin/uvicorn", "lookup_service.main:app", "--host", "0.0.0.0", "--port", "8000", "--root-path", "/lookups"]

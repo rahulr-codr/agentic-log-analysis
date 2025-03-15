@@ -5,7 +5,7 @@ services:
     build: lookup_service
     image: lookup_service
     ports:
-      - "8001:80"
+      - "8002:8000"
     container_name: lookup_service
     environment:
       - LOG_LEVEL=DEBUG
@@ -22,7 +22,7 @@ services:
   quote_api_service:
     build: quote_api_service
     ports:
-      - "8000:80"
+      - "8001:8000"
     container_name: quote_api_service
     environment:
       - LOG_LEVEL=DEBUG
@@ -38,7 +38,18 @@ services:
     depends_on:
       - lgtm
       - lookup_service
-
+  nginx:
+    build: nginx
+    image: nginx-otel
+    ports:
+      - "80:80"
+    platform: linux/amd64
+    environment:
+      - LD_LIBRARY_PATH=/opt/opentelemetry-webserver-sdk/sdk_lib/lib
+    volumes:
+      - ./nginx/opentelemetry_module.conf:/etc/nginx/conf.d/opentelemetry_module.conf
+    depends_on:
+      - lgtm
   lgtm:
     image: grafana/otel-lgtm
     ports:
