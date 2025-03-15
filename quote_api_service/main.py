@@ -1,21 +1,21 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.params import Header
 import structlog
 import logging
 import sys
 from opentelemetry.instrumentation.logging import LoggingInstrumentor
 from opentelemetry.trace import get_current_span, SpanContext
+from contextvars import ContextVar
+from typing import Optional
+
+# Create a context variable to store correlation ID
+correlation_id: ContextVar[Optional[str]] = ContextVar("correlation_id", default=None)
 
 # Configure standard logging
 logging.basicConfig(
     format="%(message)s",
     stream=sys.stdout,
     level=logging.INFO,
-)
-
-# Initialize logging instrumentation
-LoggingInstrumentor().instrument(
-    set_logging_format=True,
-    log_level=logging.INFO,
 )
 
 
@@ -26,6 +26,14 @@ def add_otel_context(logger, method_name, event_dict):
         ctx = span.get_span_context()
         event_dict["trace_id"] = format(ctx.trace_id, "032x")
         event_dict["span_id"] = format(ctx.span_id, "016x")
+    return event_dict
+
+
+# Add correlation ID processor
+def add_correlation_id(logger, method_name, event_dict):
+    corr_id = correlation_id.get()
+    if corr_id is not None:
+        event_dict["correlation_id"] = corr_id
     return event_dict
 
 
@@ -55,10 +63,33 @@ app = FastAPI(
 )
 
 
+@app.middleware("http")
+async def correlation_middleware(request: Request, call_next):
+    # Extract correlation ID from header, or generate one if not present
+    corr_id = request.headers.get("X-Correlation-ID")
+    if corr_id:
+        # Set the correlation ID in the context
+        correlation_id.set(corr_id)
+        logger.debug("correlation_id_received", correlation_id=corr_id)
+
+    response = await call_next(request)
+
+    # Clear the correlation ID after the request is processed
+    if corr_id:
+        correlation_id.set(None)
+
+    return response
+
+
 @app.get("/")
-async def root():
-    logger.info("root_endpoint_called", path="/")
-    return {"message": "Welcome to the Quote API Service"}
+async def root(
+    x_correlation_id: Optional[str] = Header(None, alias="X-Correlation-ID"),
+):
+    logger.info("root_endpoint_called", path="/", correlation_id=x_correlation_id)
+    return {
+        "message": "Welcome to the Quote API Service",
+        "correlation_id": x_correlation_id,
+    }
 
 
 # Add startup and shutdown event handlers
