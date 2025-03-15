@@ -1,0 +1,12 @@
+[project]
+name = "lookup-service"
+version = "1.0.0"
+description = "lookup service for quotes, contacts and products"
+authors = [
+  { name = "Rahul Radhakrishnan", email = "imrahul.r1795@gmail.com" }
+]
+dependencies = [
+    "fastapi",
+    "uvicorn[standard]",
+    "httpx"
+]

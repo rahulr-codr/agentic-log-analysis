@@ -1,0 +1,512 @@
+{
+    "Q-2024-005__4": {
+        "quote_number": "Q-2024-005",
+        "revision_number": 4,
+        "status": "NEGOTIATING",
+        "created_at": "2024-03-11T09:00:00Z",
+        "updated_at": "2024-03-14T13:15:00Z",
+        "valid_until": "2024-04-11T09:00:00Z",
+        "customer": {
+            "id": "CUST-901234",
+            "contact_id": "CONT-567890",
+            "account_id": "ACC-123456",
+            "billing_address_id": "ADDR-901234",
+            "shipping_address_id": "ADDR-901235"
+        },
+        "sales_rep": {
+            "id": "EMP-789012",
+            "name": "David Kim",
+            "email": "david.kim@company.com"
+        },
+        "opportunity": {
+            "id": "OPP-901234",
+            "name": "Enterprise Security Bundle 2024"
+        },
+        "items": [
+            {
+                "line_number": 1,
+                "product_id": "SEC-001",
+                "quantity": 1,
+                "unit_price": 150000.00,
+                "discount_percentage": 25,
+                "term_months": 36,
+                "billing_frequency": "annual",
+                "configuration": {
+                    "edition": "enterprise",
+                    "modules": [
+                        "endpoint",
+                        "network",
+                        "cloud",
+                        "identity"
+                    ],
+                    "deployment": "hybrid",
+                    "users": 5000
+                }
+            },
+            {
+                "line_number": 2,
+                "product_id": "HW-003",
+                "quantity": 4,
+                "unit_price": 25000.00,
+                "discount_percentage": 15,
+                "configuration": {
+                    "model": "SecurityGateway X4",
+                    "throughput": "40Gbps",
+                    "redundancy": "active-active",
+                    "warranty": "3 years"
+                }
+            },
+            {
+                "line_number": 3,
+                "product_id": "SVC-002",
+                "quantity": 1,
+                "unit_price": 75000.00,
+                "discount_percentage": 10,
+                "configuration": {
+                    "service_type": "Implementation",
+                    "duration_weeks": 12,
+                    "team_size": 3,
+                    "phases": [
+                        "planning",
+                        "deployment",
+                        "testing",
+                        "handover"
+                    ]
+                }
+            },
+            {
+                "line_number": 4,
+                "product_id": "TRN-001",
+                "quantity": 50,
+                "unit_price": 1500.00,
+                "discount_percentage": 20,
+                "configuration": {
+                    "course": "Security Administration",
+                    "delivery": "virtual",
+                    "duration_days": 5,
+                    "materials": "included"
+                }
+            }
+        ],
+        "bundle": {
+            "name": "Enterprise Security Complete",
+            "type": "custom",
+            "components": [
+                "software",
+                "hardware",
+                "services",
+                "training"
+            ],
+            "support_level": "platinum",
+            "success_manager": {
+                "assigned": true,
+                "hours_per_month": 10
+            }
+        },
+        "totals": {
+            "list_price": 375000.00,
+            "bundle_discount": 78750.00,
+            "additional_discount": 15000.00,
+            "subtotal": 281250.00,
+            "tax_amount": 22500.00,
+            "total": 303750.00,
+            "annual_recurring": 37500.00
+        },
+        "terms_and_conditions": {
+            "payment_terms": "40% upfront, 30% on deployment, 30% on completion",
+            "hardware_delivery": "8-10 weeks ARO",
+            "training_validity": "12 months from purchase",
+            "sla_terms": "Platinum SLA included",
+            "cancellation_terms": "90 days written notice"
+        },
+        "metadata": {
+            "currency": "USD",
+            "locale": "en-US",
+            "timezone": "America/Chicago",
+            "deal_type": "new_business"
+        }
+    },
+    "Q-2024-002__3": {
+        "quote_number": "Q-2024-002",
+        "revision_number": 3,
+        "status": "PENDING_APPROVAL",
+        "created_at": "2024-03-10T15:30:00Z",
+        "updated_at": "2024-03-14T09:15:00Z",
+        "valid_until": "2024-04-10T15:30:00Z",
+        "customer": {
+            "id": "CUST-789012",
+            "contact_id": "CONT-345678",
+            "account_id": "ACC-901234",
+            "shipping_address_id": "ADDR-567890"
+        },
+        "sales_rep": {
+            "id": "EMP-123456",
+            "name": "Sarah Johnson",
+            "email": "sarah.johnson@company.com"
+        },
+        "opportunity": {
+            "id": "OPP-234567",
+            "name": "Data Center Hardware Upgrade 2024"
+        },
+        "items": [
+            {
+                "line_number": 1,
+                "product_id": "HW-001",
+                "quantity": 10,
+                "unit_price": 5999.99,
+                "discount_percentage": 12,
+                "configuration": {
+                    "model": "PowerServer X1",
+                    "cpu": "Intel Xeon 8380",
+                    "ram": "512GB",
+                    "storage": "8TB NVMe",
+                    "warranty": "5 years"
+                }
+            },
+            {
+                "line_number": 2,
+                "product_id": "HW-002",
+                "quantity": 5,
+                "unit_price": 8999.99,
+                "discount_percentage": 8,
+                "configuration": {
+                    "model": "StorageArray S2",
+                    "capacity": "100TB",
+                    "raid": "RAID-6",
+                    "connectivity": "40GbE"
+                }
+            },
+            {
+                "line_number": 3,
+                "product_id": "SVC-001",
+                "quantity": 1,
+                "unit_price": 15000.00,
+                "discount_percentage": 0,
+                "configuration": {
+                    "service_type": "Installation",
+                    "duration_days": 5,
+                    "technicians": 2
+                }
+            }
+        ],
+        "shipping": {
+            "method": "Ground",
+            "carrier": "FedEx",
+            "estimated_delivery": "2024-04-01",
+            "special_instructions": "Loading dock delivery required",
+            "insurance_required": true
+        },
+        "totals": {
+            "subtotal": 119999.80,
+            "discount_amount": 12959.98,
+            "tax_amount": 8563.17,
+            "shipping_amount": 1500.00,
+            "total": 117103.99
+        },
+        "terms_and_conditions": {
+            "payment_terms": "50% upfront, 50% on delivery",
+            "delivery_terms": "FOB Origin",
+            "warranty_terms": "5 years parts and labor",
+            "return_policy": "30 days unopened"
+        },
+        "metadata": {
+            "currency": "USD",
+            "locale": "en-US",
+            "timezone": "America/Chicago"
+        }
+    },
+    "Q-2024-004__1": {
+        "quote_number": "Q-2024-004",
+        "revision_number": 1,
+        "status": "SENT",
+        "created_at": "2024-03-13T14:20:00Z",
+        "updated_at": "2024-03-14T16:45:00Z",
+        "valid_until": "2024-04-13T14:20:00Z",
+        "customer": {
+            "id": "CUST-234567",
+            "contact_id": "CONT-890123",
+            "account_id": "ACC-456789",
+            "billing_address_id": "ADDR-234567"
+        },
+        "sales_rep": {
+            "id": "EMP-567890",
+            "name": "Emily Rodriguez",
+            "email": "emily.rodriguez@company.com"
+        },
+        "opportunity": {
+            "id": "OPP-345678",
+            "name": "Digital Transformation Consulting 2024"
+        },
+        "items": [
+            {
+                "line_number": 1,
+                "product_id": "CONS-001",
+                "quantity": 160,
+                "unit_price": 250.00,
+                "discount_percentage": 0,
+                "configuration": {
+                    "role": "Senior Consultant",
+                    "expertise": [
+                        "cloud",
+                        "architecture",
+                        "strategy"
+                    ],
+                    "duration_hours": 160,
+                    "allocation": "4 weeks, full-time"
+                }
+            },
+            {
+                "line_number": 2,
+                "product_id": "CONS-002",
+                "quantity": 320,
+                "unit_price": 200.00,
+                "discount_percentage": 5,
+                "configuration": {
+                    "role": "Technical Consultant",
+                    "expertise": [
+                        "development",
+                        "integration",
+                        "testing"
+                    ],
+                    "duration_hours": 320,
+                    "allocation": "8 weeks, full-time"
+                }
+            },
+            {
+                "line_number": 3,
+                "product_id": "CONS-003",
+                "quantity": 80,
+                "unit_price": 300.00,
+                "discount_percentage": 0,
+                "configuration": {
+                    "role": "Project Manager",
+                    "expertise": [
+                        "agile",
+                        "delivery",
+                        "stakeholder-management"
+                    ],
+                    "duration_hours": 80,
+                    "allocation": "12 weeks, part-time"
+                }
+            }
+        ],
+        "project": {
+            "start_date": "2024-05-01T00:00:00Z",
+            "end_date": "2024-07-31T00:00:00Z",
+            "delivery_method": "hybrid",
+            "milestones": [
+                {
+                    "name": "Discovery and Planning",
+                    "due_date": "2024-05-15T00:00:00Z",
+                    "payment_percentage": 20
+                },
+                {
+                    "name": "Architecture and Design",
+                    "due_date": "2024-06-15T00:00:00Z",
+                    "payment_percentage": 30
+                },
+                {
+                    "name": "Implementation",
+                    "due_date": "2024-07-15T00:00:00Z",
+                    "payment_percentage": 40
+                },
+                {
+                    "name": "Handover and Close",
+                    "due_date": "2024-07-31T00:00:00Z",
+                    "payment_percentage": 10
+                }
+            ],
+            "deliverables": [
+                "Project Charter",
+                "Solution Architecture",
+                "Implementation Roadmap",
+                "Technical Documentation",
+                "Knowledge Transfer Sessions"
+            ]
+        },
+        "totals": {
+            "subtotal": 120000.00,
+            "discount_amount": 3200.00,
+            "tax_amount": 9344.00,
+            "total": 126144.00
+        },
+        "terms_and_conditions": {
+            "payment_terms": "Per milestone completion",
+            "expenses": "Travel and accommodation extra",
+            "cancellation_terms": "14 days notice",
+            "intellectual_property": "Client owns deliverables"
+        },
+        "metadata": {
+            "currency": "USD",
+            "locale": "en-US",
+            "timezone": "America/New_York"
+        }
+    },
+    "Q-2024-001__1": {
+        "quote_number": "Q-2024-001",
+        "revision_number": 1,
+        "status": "DRAFT",
+        "created_at": "2024-03-14T10:00:00Z",
+        "updated_at": "2024-03-14T10:00:00Z",
+        "valid_until": "2024-04-14T10:00:00Z",
+        "customer": {
+            "id": "CUST-123456",
+            "contact_id": "CONT-789012",
+            "account_id": "ACC-345678"
+        },
+        "sales_rep": {
+            "id": "EMP-901234",
+            "name": "John Smith",
+            "email": "john.smith@company.com"
+        },
+        "opportunity": {
+            "id": "OPP-567890",
+            "name": "Annual Software Renewal 2024"
+        },
+        "items": [
+            {
+                "line_number": 1,
+                "product_id": "PROD-001",
+                "quantity": 50,
+                "unit_price": 199.99,
+                "discount_percentage": 10,
+                "term_months": 12,
+                "configuration": {
+                    "edition": "enterprise",
+                    "users": 50,
+                    "storage": "1TB"
+                }
+            },
+            {
+                "line_number": 2,
+                "product_id": "PROD-002",
+                "quantity": 50,
+                "unit_price": 49.99,
+                "discount_percentage": 15,
+                "term_months": 12,
+                "configuration": {
+                    "support_level": "premium",
+                    "response_time": "4h"
+                }
+            }
+        ],
+        "totals": {
+            "subtotal": 12499.00,
+            "discount_amount": 1874.85,
+            "tax_amount": 848.93,
+            "total": 11473.08
+        },
+        "terms_and_conditions": {
+            "payment_terms": "NET30",
+            "delivery_terms": "Electronic Delivery",
+            "special_terms": "Annual billing with auto-renewal option"
+        },
+        "metadata": {
+            "currency": "USD",
+            "locale": "en-US",
+            "timezone": "America/New_York"
+        }
+    },
+    "Q-2024-003__2": {
+        "quote_number": "Q-2024-003",
+        "revision_number": 2,
+        "status": "APPROVED",
+        "created_at": "2024-03-12T08:45:00Z",
+        "updated_at": "2024-03-14T11:30:00Z",
+        "valid_until": "2024-04-12T08:45:00Z",
+        "customer": {
+            "id": "CUST-456789",
+            "contact_id": "CONT-123456",
+            "account_id": "ACC-789012",
+            "billing_address_id": "ADDR-123456"
+        },
+        "sales_rep": {
+            "id": "EMP-345678",
+            "name": "Michael Chen",
+            "email": "michael.chen@company.com"
+        },
+        "opportunity": {
+            "id": "OPP-789012",
+            "name": "Cloud Platform Enterprise Subscription"
+        },
+        "items": [
+            {
+                "line_number": 1,
+                "product_id": "SUB-001",
+                "quantity": 1000,
+                "unit_price": 25.00,
+                "discount_percentage": 20,
+                "term_months": 36,
+                "billing_frequency": "monthly",
+                "configuration": {
+                    "tier": "enterprise",
+                    "features": [
+                        "analytics",
+                        "automation",
+                        "security"
+                    ],
+                    "sla": "99.99%",
+                    "support": "24/7"
+                }
+            },
+            {
+                "line_number": 2,
+                "product_id": "ADD-001",
+                "quantity": 1000,
+                "unit_price": 5.00,
+                "discount_percentage": 15,
+                "term_months": 36,
+                "billing_frequency": "monthly",
+                "configuration": {
+                    "feature": "advanced_security",
+                    "retention_days": 90
+                }
+            },
+            {
+                "line_number": 3,
+                "product_id": "ADD-002",
+                "quantity": 1,
+                "unit_price": 2000.00,
+                "discount_percentage": 0,
+                "term_months": 36,
+                "billing_frequency": "monthly",
+                "configuration": {
+                    "feature": "dedicated_support",
+                    "team_size": 2
+                }
+            }
+        ],
+        "subscription": {
+            "start_date": "2024-04-01T00:00:00Z",
+            "end_date": "2027-03-31T23:59:59Z",
+            "auto_renewal": true,
+            "price_lock_months": 36,
+            "cancellation_terms": "90 days notice",
+            "usage_limits": {
+                "api_calls": 1000000,
+                "storage_gb": 5000,
+                "users": 1000
+            }
+        },
+        "totals": {
+            "monthly_recurring": {
+                "subtotal": 30000.00,
+                "discount_amount": 5850.00,
+                "tax_amount": 1929.00,
+                "total": 26079.00
+            },
+            "total_contract_value": 939844.00
+        },
+        "terms_and_conditions": {
+            "payment_terms": "Monthly in advance",
+            "service_level_agreement": "Enterprise SLA v3.2",
+            "usage_terms": "Fair use policy applies",
+            "data_processing_terms": "DPA v2.1 included"
+        },
+        "metadata": {
+            "currency": "USD",
+            "locale": "en-US",
+            "timezone": "America/Los_Angeles"
+        }
+    }
+}

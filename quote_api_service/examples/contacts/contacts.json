@@ -1,0 +1,149 @@
+{
+    "contacts": [
+        {
+            "id": "CONT-789012",
+            "type": "primary",
+            "first_name": "Robert",
+            "last_name": "Wilson",
+            "title": "IT Director",
+            "email": "robert.wilson@acmecorp.com",
+            "phone": "+1-555-123-4567",
+            "mobile": "+1-555-987-6543",
+            "preferred_contact_method": "email",
+            "language": "en-US",
+            "timezone": "America/New_York",
+            "account_id": "ACC-345678",
+            "customer_id": "CUST-123456",
+            "address": {
+                "street": "123 Tech Park Drive",
+                "city": "Boston",
+                "state": "MA",
+                "postal_code": "02110",
+                "country": "USA"
+            },
+            "preferences": {
+                "newsletter": true,
+                "product_updates": true,
+                "billing_notifications": true
+            },
+            "last_contacted": "2024-03-10T15:30:00Z"
+        },
+        {
+            "id": "CONT-345678",
+            "type": "technical",
+            "first_name": "Jennifer",
+            "last_name": "Martinez",
+            "title": "Data Center Manager",
+            "email": "jennifer.martinez@datatech.com",
+            "phone": "+1-555-234-5678",
+            "mobile": "+1-555-876-5432",
+            "preferred_contact_method": "phone",
+            "language": "en-US",
+            "timezone": "America/Chicago",
+            "account_id": "ACC-901234",
+            "customer_id": "CUST-789012",
+            "address": {
+                "street": "456 Enterprise Way",
+                "city": "Dallas",
+                "state": "TX",
+                "postal_code": "75201",
+                "country": "USA"
+            },
+            "preferences": {
+                "newsletter": false,
+                "product_updates": true,
+                "maintenance_notifications": true
+            },
+            "last_contacted": "2024-03-14T09:15:00Z"
+        },
+        {
+            "id": "CONT-123456",
+            "type": "executive",
+            "first_name": "Alexander",
+            "last_name": "Chang",
+            "title": "CTO",
+            "email": "alexander.chang@cloudscape.io",
+            "phone": "+1-555-345-6789",
+            "mobile": "+1-555-765-4321",
+            "preferred_contact_method": "mobile",
+            "language": "en-US",
+            "timezone": "America/Los_Angeles",
+            "account_id": "ACC-789012",
+            "customer_id": "CUST-456789",
+            "address": {
+                "street": "789 Innovation Blvd",
+                "city": "San Francisco",
+                "state": "CA",
+                "postal_code": "94105",
+                "country": "USA"
+            },
+            "preferences": {
+                "newsletter": true,
+                "product_updates": true,
+                "executive_briefings": true
+            },
+            "last_contacted": "2024-03-14T11:30:00Z"
+        },
+        {
+            "id": "CONT-890123",
+            "type": "business",
+            "first_name": "Sarah",
+            "last_name": "O'Connor",
+            "title": "Digital Transformation Lead",
+            "email": "sarah.oconnor@globalcorp.com",
+            "phone": "+1-555-456-7890",
+            "mobile": "+1-555-654-3210",
+            "preferred_contact_method": "email",
+            "language": "en-US",
+            "timezone": "America/New_York",
+            "account_id": "ACC-456789",
+            "customer_id": "CUST-234567",
+            "address": {
+                "street": "321 Business Circle",
+                "city": "New York",
+                "state": "NY",
+                "postal_code": "10004",
+                "country": "USA"
+            },
+            "preferences": {
+                "newsletter": true,
+                "product_updates": true,
+                "workshop_invitations": true
+            },
+            "last_contacted": "2024-03-14T16:45:00Z"
+        },
+        {
+            "id": "CONT-567890",
+            "type": "security",
+            "first_name": "Michael",
+            "last_name": "Thompson",
+            "title": "CISO",
+            "email": "michael.thompson@securetech.com",
+            "phone": "+1-555-567-8901",
+            "mobile": "+1-555-543-2109",
+            "preferred_contact_method": "phone",
+            "language": "en-US",
+            "timezone": "America/Chicago",
+            "account_id": "ACC-123456",
+            "customer_id": "CUST-901234",
+            "address": {
+                "street": "567 Security Plaza",
+                "city": "Chicago",
+                "state": "IL",
+                "postal_code": "60601",
+                "country": "USA"
+            },
+            "preferences": {
+                "newsletter": true,
+                "security_alerts": true,
+                "compliance_updates": true
+            },
+            "last_contacted": "2024-03-14T13:15:00Z"
+        }
+    ],
+    "metadata": {
+        "total_count": 5,
+        "generated_at": "2024-03-14T17:00:00Z",
+        "version": "1.0"
+    }
+}

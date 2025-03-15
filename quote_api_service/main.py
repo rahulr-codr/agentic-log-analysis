@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Header, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.database.database import engine, Base
 from app.routes.quotes import router as quotes_router
 from app.config.telemetry_config import setup_telemetry
 from app.config.logging_config import setup_logging
+from typing import Optional
 
 import uuid
 from fastapi import Request
@@ -23,11 +24,20 @@ resource = Resource.create(
 logger = setup_logging(resource)
 
 
+async def get_correlation_id(
+    x_correlation_id: Optional[str] = Header(
+        None, description="Optional correlation ID for request tracing"
+    ),
+):
+    return x_correlation_id or str(uuid.uuid4())
+
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     docs_url=f"{settings.API_V1_STR}/docs",
     redoc_url=f"{settings.API_V1_STR}/redoc",
+    dependencies=[Depends(get_correlation_id)],
 )
 
 # Set up CORS
@@ -39,27 +49,18 @@ app.add_middleware(
     allow_headers=["X-Correlation-ID", "*"],  # Explicitly allow correlation ID header
 )
 
+
 # Set up correlation ID middleware (after CORS)
-
-
-# # Attach the filter to the Uvicorn access logger
-# access_logger = logging.getLogger("uvicorn.access")
-# access_logger.addFilter(CorrelationIdFilter())
-
-app = FastAPI()
-
-
-# Middleware to extract or generate the correlation id and set it in the context variable
 @app.middleware("http")
 async def add_correlation_id(request: Request, call_next):
     # Try to extract correlation id from the request header (or generate a new one)
     cid = request.headers.get("X-Correlation-ID", str(uuid.uuid4()))
     correlation_id_ctx.set(cid)
     response = await call_next(request)
+    # Add correlation ID to response headers
+    response.headers["X-Correlation-ID"] = cid
     return response
 
-
-# app.add_middleware(CorrelationMiddleware)
 
 # Create database tables
 try:
