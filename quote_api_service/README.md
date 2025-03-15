@@ -1,25 +1,20 @@
 # Quote API Service
 
-A FastAPI-based service for managing quotes with OpenTelemetry integration for observability.
+A FastAPI-based service for managing and retrieving quotes, with OpenTelemetry instrumentation and structured logging.
 
 ## Features
 
 - FastAPI REST API
-- SQLAlchemy ORM with SQLite database
-- OpenTelemetry integration for:
-  - Distributed tracing
-  - Metrics collection
-  - Log aggregation
-- Docker support
-- Poetry for dependency management
+- Structured logging with `structlog`
+- OpenTelemetry instrumentation
+- JSON formatted logs with trace context
 
 ## Prerequisites
 
-- Python 3.9 or higher
-- Poetry for dependency management
-- Docker and Docker Compose (optional, for containerized deployment)
+- Python 3.8+
+- pip
 
-## Setup
+## Installation
 
 1. Clone the repository:
 ```bash
@@ -27,101 +22,93 @@ git clone <repository-url>
 cd quote-api-service
 ```
 
-2. Install Poetry if you haven't already:
+2. Create and activate a virtual environment:
 ```bash
-curl -sSL https://install.python-poetry.org | python3 -
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-3. Install dependencies using Poetry:
+3. Install dependencies:
 ```bash
-poetry install
-```
-
-4. Create a `.env` file in the root directory with the following variables:
-```env
-DATABASE_URL=sqlite:///./quotes.db
-LOG_LEVEL=INFO
-OTEL_SERVICE_NAME=quote_api_service
-OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317  # For local development
+pip install -r requirements.txt
 ```
 
 ## Running the Application
 
 ### Local Development
 
-1. Activate the Poetry environment:
-```bash
-poetry shell
-```
-
-2. Run the application:
-```bash
-uvicorn main:app --reload
-```
-
-The API will be available at `http://localhost:8000`
-
-### Using Docker
-
-1. Build and start the containers:
-```bash
-docker compose up --build
-```
-
-2. Stop the containers:
-```bash
-docker compose down
-```
-
-## API Documentation
-
-Once the application is running, you can access:
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
-
-## OpenTelemetry Integration
-
-The application is configured to send telemetry data to an OpenTelemetry collector. Make sure you have the following services running:
-
-- OpenTelemetry Collector
-- Loki (for logs)
-- Grafana (for visualization)
-- Tempo (for traces)
-- Mimir (for metrics)
-
-The default configuration assumes these services are running locally. Update the `OTEL_EXPORTER_OTLP_ENDPOINT` in your `.env` file if your collector is running elsewhere.
-
-## Development
-
-### Project Structure
-
-```
-quote-api-service/
-├── app/
-│   ├── api/
-│   │   └── v1/
-│   │       └── endpoints/
-│   ├── config/
-│   ├── core/
-│   ├── db/
-│   ├── models/
-│   └── schemas/
-├── tests/
-├── alembic/
-├── .env
-├── docker-compose.yml
-├── Dockerfile
-├── main.py
-├── pyproject.toml
-└── README.md
-```
-
-### Running Tests
+Run the application with OpenTelemetry instrumentation:
 
 ```bash
-poetry run pytest
+OTEL_SERVICE_NAME=quote-api-service \
+OTEL_TRACES_EXPORTER=otlp \
+OTEL_METRICS_EXPORTER=otlp \
+OTEL_LOGS_EXPORTER=otlp \
+OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317 \
+opentelemetry-instrument python main.py
 ```
+
+The API will be available at:
+- http://localhost:8000
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+### Docker
+
+1. Build the Docker image:
+```bash
+docker build -t quote-api-service .
+```
+
+2. Run the container:
+```bash
+docker run -p 8000:8000 quote-api-service
+```
+
+## API Endpoints
+
+- `GET /`: Root endpoint that returns a welcome message
+
+## Observability
+
+### Logging
+
+The application uses structured logging with `structlog`, configured to output JSON-formatted logs with the following information:
+- Timestamp
+- Log level
+- Event message
+- OpenTelemetry trace and span IDs
+- Additional context
+
+Example log output:
+```json
+{
+    "event": "root_endpoint_called",
+    "level": "info",
+    "timestamp": "2024-03-15T03:26:22.385681Z",
+    "trace_id": "8a1c9469e01578e86cf4d0a07892943c",
+    "span_id": "b7ad6b7169203331",
+    "path": "/"
+}
+```
+
+### OpenTelemetry
+
+The application is instrumented with OpenTelemetry for:
+- Distributed tracing
+- Metrics
+- Logs
+
+Configure the OpenTelemetry endpoint using the `OTEL_EXPORTER_OTLP_ENDPOINT` environment variable.
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## License
 
-[Your License Here]
+[Add your license here]
