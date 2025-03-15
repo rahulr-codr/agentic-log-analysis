@@ -9,15 +9,13 @@ services:
     # volumes:
     #   - ./lookup_service:/app
     #   - ./lookup_service/data:/app/data
-  api:
+  quote_api_service:
     build: quote_api_service
     ports:
-      - "8000:8000"
-    volumes:
-      - ./quote_api_service/data:/app/data
+      - "8000:80"
+    container_name: quote_api_service
     environment:
-      - DATABASE_URL=sqlite:///./data/quotes.db
-      - LOG_LEVEL=INFO
+      - LOG_LEVEL=DEBUG
       - OTEL_SERVICE_NAME=quote_api_service
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://lgtm:4317
       - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
@@ -26,6 +24,7 @@ services:
       - OTEL_METRICS_EXPORTER=otlp
       - OTEL_TRACES_EXPORTER=otlp
       - OTEL_LOGS_EXPORTER=otlp
+      - OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
     depends_on:
       - lgtm
 
