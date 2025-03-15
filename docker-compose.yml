@@ -6,9 +6,19 @@ services:
     image: lookup_service
     ports:
       - "8001:80"
-    # volumes:
-    #   - ./lookup_service:/app
-    #   - ./lookup_service/data:/app/data
+    container_name: lookup_service
+    environment:
+      - LOG_LEVEL=DEBUG
+      - OTEL_SERVICE_NAME=lookup_service
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://lgtm:4317
+      - OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=lookup_service
+      - OTEL_TRACES_SAMPLER=parentbased_always_on
+      - OTEL_METRICS_EXPORTER=otlp
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_LOGS_EXPORTER=otlp
+      - OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
+
   quote_api_service:
     build: quote_api_service
     ports:
@@ -27,6 +37,7 @@ services:
       - OTEL_PYTHON_LOGGING_AUTO_INSTRUMENTATION_ENABLED=true
     depends_on:
       - lgtm
+      - lookup_service
 
   lgtm:
     image: grafana/otel-lgtm

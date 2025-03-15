@@ -73,16 +73,12 @@ async def correlation_id_middleware(request: Request, call_next):
     corr_id = request.headers.get("X-Correlation-ID")
     if not corr_id:
         corr_id = str(uuid.uuid4())
-
     # Set correlation ID in context
     correlation_id.set(corr_id)
-
     # Process request
     response = await call_next(request)
-
     # Add correlation ID to response header
     response.headers["X-Correlation-ID"] = corr_id
-
     return response
 
 
