@@ -48,6 +48,7 @@ services:
       - LD_LIBRARY_PATH=/opt/opentelemetry-webserver-sdk/sdk_lib/lib
     volumes:
       - ./nginx/opentelemetry_module.conf:/etc/nginx/conf.d/opentelemetry_module.conf
+      - ./nginx-logs:/var/log/nginx
     depends_on:
       - lgtm
   lgtm:
@@ -61,10 +62,14 @@ services:
       - "4318:4318" # OTLP HTTP
       - "8888:8888" # Prometheus metrics
     volumes:
+      - ./otel-collector-config.yaml:/otel-lgtm/otelcol-config.yaml
+      - ./otel-collector-config.yaml:/otel-lgtm/test.yaml
       - lgtm_data:/var/lib/grafana
+      - ./nginx-logs:/var/log/nginx
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
       - GF_USERS_ALLOW_SIGN_UP=false
+      - ENABLE_LOGS_OTELCOL=true
 
 volumes:
   lgtm_data:

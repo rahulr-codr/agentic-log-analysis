@@ -12,5 +12,6 @@ ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/opentelemetry-webserver-sdk/sdk_lib/li
 RUN sed -i '1iload_module /opt/opentelemetry-webserver-sdk/WebServerModule/Nginx/1.23.1/ngx_http_opentelemetry_module.so;' /etc/nginx/nginx.conf
 
 # ✅ Copy your app config
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY opentelemetry_module.conf /etc/nginx/conf.d/
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY server.conf /etc/nginx/conf.d/default.conf
