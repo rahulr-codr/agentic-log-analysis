@@ -138,5 +138,33 @@
             "compliance_updates": true
         },
         "last_contacted": "2024-03-14T13:15:00Z"
+    },
+    "EMP-789012": {
+        "id": "EMP-789012",
+        "type": "technical",
+        "first_name": "David",
+        "last_name": "Kim",
+        "title": "Systems Engineer",
+        "email": "david.kim@company.com",
+        "phone": "+1-555-123-4567",
+        "mobile": "+1-555-987-6543",
+        "preferred_contact_method": "email",
+        "language": "en-US",
+        "timezone": "America/New_York",
+        "account_id": "ACC-456789",
+        "customer_id": "CUST-123456",
+        "address": {
+            "street": "789 Innovation Drive",
+            "city": "Boston",
+            "state": "MA",
+            "postal_code": "02115",
+            "country": "USA"
+        },
+        "preferences": {
+            "newsletter": true,
+            "product_updates": true,
+            "maintenance_notifications": false
+        },
+        "last_contacted": "2024-03-10T14:30:00Z"
     }
 }

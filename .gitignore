@@ -1,0 +1,4 @@
+nginx-logs/
+.DS_Store
+.venv/
+.env

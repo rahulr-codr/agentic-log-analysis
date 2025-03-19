@@ -14,5 +14,9 @@ dependencies = [
     "opentelemetry-instrumentation-logging>=0.52b0",
     "structlog>=25.2.0",
     "uvicorn>=0.34.0",
-    "httpx"    
+    "httpx",
+    "lookup-models",
 ]
+
+[tool.uv.sources]
+lookup-models = { path = "../lookup_models" }

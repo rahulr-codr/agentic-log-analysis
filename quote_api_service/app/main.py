@@ -1,5 +1,5 @@
 import uuid
-from fastapi import FastAPI, Request
+from fastapi import APIRouter, FastAPI, Request
 from fastapi.params import Header
 import structlog
 import logging
@@ -7,6 +7,11 @@ import sys
 from opentelemetry.trace import get_current_span, SpanContext
 from contextvars import ContextVar
 from typing import Any, Optional
+from .routes import router
+from .routes.quotes import router as quotes_router
+from .routes.health import router as health_router
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 
 # Create context variable for correlation ID
 correlation_id: ContextVar[str] = ContextVar("correlation_id", default="")
@@ -82,6 +87,15 @@ async def correlation_id_middleware(request: Request, call_next):
     return response
 
 
+# Include all routes
+
+router = APIRouter()
+router.include_router(quotes_router, prefix="/quotes", tags=["quotes"])
+router.include_router(health_router, prefix="/health", tags=["health"])
+
+app.include_router(router)
+
+
 @app.get("/")
 async def root(
     x_correlation_id: Optional[str] = Header(None, alias="X-Correlation-ID"),
@@ -91,3 +105,61 @@ async def root(
         "message": "Welcome to the Quote API Service",
         "correlation_id": x_correlation_id,
     }
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    # Get trace_id from current span
+    span = get_current_span()
+    trace_id = None
+    if span and span.get_span_context().is_valid:
+        trace_id = format(span.get_span_context().trace_id, "032x")
+
+    # Get correlation_id from context
+    corr_id = correlation_id.get()
+
+    error_response = {
+        "detail": "Something went wrong",
+        "trace_id": trace_id,
+        "correlation_id": corr_id,
+    }
+
+    logger.error(
+        "unhandled_exception",
+        error=str(exc),
+        path=request.url.path,
+        method=request.method,
+        trace_id=trace_id,
+        correlation_id=corr_id,
+    )
+
+    return JSONResponse(status_code=500, content=error_response)
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    # Get trace_id from current span
+    span = get_current_span()
+    trace_id = None
+    if span and span.get_span_context().is_valid:
+        trace_id = format(span.get_span_context().trace_id, "032x")
+
+    # Get correlation_id from context
+    corr_id = correlation_id.get()
+
+    error_response = {
+        "detail": "Invalid request parameters",
+        "trace_id": trace_id,
+        "correlation_id": corr_id,
+    }
+
+    logger.error(
+        "validation_error",
+        error=str(exc),
+        path=request.url.path,
+        method=request.method,
+        trace_id=trace_id,
+        correlation_id=corr_id,
+    )
+
+    return JSONResponse(status_code=422, content=error_response)

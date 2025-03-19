@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional, Dict
 from fastapi import HTTPException
 
-from lookup_service.models import Contact
+from lookup_models import Contact
 from lookup_service.logging_config import logger
 
 

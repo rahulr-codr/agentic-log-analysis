@@ -4,4 +4,4 @@ opentelemetry-instrument \
     --metrics_exporter none \
     --logs_exporter none \
     --service_name quote-api-service \
-    uvicorn main:app --host 0.0.0.0 --port 8000 --no-access-log --log-level info
+    uvicorn app.main:app --host 0.0.0.0 --port 8001 --no-access-log --log-level info

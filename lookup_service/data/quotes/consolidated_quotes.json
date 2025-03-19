@@ -25,7 +25,7 @@
         "items": [
             {
                 "line_number": 1,
-                "product_id": "SEC-001",
+                "product_id": "SVC-001",
                 "quantity": 1,
                 "unit_price": 150000.00,
                 "discount_percentage": 25,
@@ -54,37 +54,6 @@
                     "throughput": "40Gbps",
                     "redundancy": "active-active",
                     "warranty": "3 years"
-                }
-            },
-            {
-                "line_number": 3,
-                "product_id": "SVC-002",
-                "quantity": 1,
-                "unit_price": 75000.00,
-                "discount_percentage": 10,
-                "configuration": {
-                    "service_type": "Implementation",
-                    "duration_weeks": 12,
-                    "team_size": 3,
-                    "phases": [
-                        "planning",
-                        "deployment",
-                        "testing",
-                        "handover"
-                    ]
-                }
-            },
-            {
-                "line_number": 4,
-                "product_id": "TRN-001",
-                "quantity": 50,
-                "unit_price": 1500.00,
-                "discount_percentage": 20,
-                "configuration": {
-                    "course": "Security Administration",
-                    "delivery": "virtual",
-                    "duration_days": 5,
-                    "materials": "included"
                 }
             }
         ],

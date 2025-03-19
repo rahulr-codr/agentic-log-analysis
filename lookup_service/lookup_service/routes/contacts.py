@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from lookup_service.services.contact_service import ContactService
-from lookup_service.models import Contact
+from lookup_models import Contact
 
 router = APIRouter()
 contact_service = ContactService()

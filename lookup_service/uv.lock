@@ -191,6 +191,17 @@ wheels = [
 ]
 
 [[package]]
+name = "lookup-models"
+version = "0.1.0"
+source = { directory = "../lookup_models" }
+dependencies = [
+    { name = "pydantic" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "pydantic", specifier = ">=2.0.0" }]
+
+[[package]]
 name = "lookup-service"
 version = "1.0.0"
 source = { virtual = "." }
@@ -198,6 +209,7 @@ dependencies = [
     { name = "asgi-correlation-id" },
     { name = "fastapi" },
     { name = "httpx" },
+    { name = "lookup-models" },
     { name = "opentelemetry-distro" },
     { name = "opentelemetry-exporter-otlp-proto-grpc" },
     { name = "opentelemetry-instrumentation-fastapi" },
@@ -211,6 +223,7 @@ requires-dist = [
     { name = "asgi-correlation-id", specifier = ">=4.3.4" },
     { name = "fastapi", specifier = ">=0.115.11" },
     { name = "httpx" },
+    { name = "lookup-models", directory = "../lookup_models" },
     { name = "opentelemetry-distro", specifier = ">=0.52b0" },
     { name = "opentelemetry-exporter-otlp-proto-grpc", specifier = ">=1.31.0" },
     { name = "opentelemetry-instrumentation-fastapi", specifier = ">=0.52b0" },

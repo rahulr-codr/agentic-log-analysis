@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from lookup_service.services.quote_service import QuoteService
-from lookup_service.models import Quote
+from lookup_models import Quote
 
 router = APIRouter()
 quote_service = QuoteService()

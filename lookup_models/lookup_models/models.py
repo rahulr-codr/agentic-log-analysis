@@ -1,6 +1,13 @@
 from pydantic import BaseModel, Field, RootModel
 from typing import Optional, List, Dict, Any, Union
 from datetime import datetime
+from enum import Enum
+
+
+class AgreementTemplate(str, Enum):
+    SIMPLE = "SIMPLE"  # For basic agreements
+    MASTER = "MASTER"  # For master agreements
+    PRIME = "PRIME"  # For prime agreements
 
 
 class Customer(BaseModel):
@@ -202,3 +209,84 @@ class Contact(BaseModel):
     address: Address
     preferences: ContactPreferences
     last_contacted: datetime
+
+
+class QuoteCreate(BaseModel):
+    quote_number: str
+    revision_number: int
+
+
+class QuoteUpdate(QuoteCreate):
+    pass
+
+
+class QuotePublish(QuoteCreate):
+    pass
+
+
+class QuoteCancel(QuoteCreate):
+    pass
+
+
+class QuoteApprove(QuoteCreate):
+    pass
+
+
+class EnrichedQuoteItem(BaseModel):
+    line_number: int
+    product_id: str
+    quantity: int
+    unit_price: float
+    discount_percentage: float
+    term_months: Optional[int] = None
+    billing_frequency: Optional[str] = None
+    configuration: ItemConfiguration
+    product: Product  # Enriched product information
+
+
+class EnrichedQuote(BaseModel):
+    quote_number: str
+    revision_number: int
+    status: str
+    created_at: datetime
+    updated_at: datetime
+    valid_until: datetime
+    customer: Customer
+    sales_rep: SalesRep
+    opportunity: Opportunity
+    items: List[EnrichedQuoteItem]  # Using enriched items
+    totals: Totals
+    terms_and_conditions: TermsAndConditions
+    metadata: Metadata
+    # Enriched contact information
+    customer_contact: Contact  # Full contact information for the customer
+    sales_rep_contact: Contact  # Full contact information for the sales rep
+    # Optional fields for different quote types
+    shipping: Optional[Dict[str, Any]] = None
+    project: Optional[Dict[str, Any]] = None
+    subscription: Optional[Dict[str, Any]] = None
+    bundle: Optional[Dict[str, Any]] = None
+
+
+class Agreement(BaseModel):
+    agreement_id: str
+    contract_number: str
+    version: int
+    status: str
+    template: AgreementTemplate
+    created_date: datetime
+    last_modified_date: datetime
+    expiration_date: datetime
+    customer: Customer
+    sales_representative: SalesRep
+    opportunity: Opportunity
+    line_items: List[EnrichedQuoteItem]
+    financial_summary: Totals
+    terms: Optional[TermsAndConditions] = None
+    metadata: Metadata
+    customer_contact: Contact
+    sales_representative_contact: Contact
+    delivery_terms: Optional[Dict[str, Any]] = None
+    project_details: Optional[Dict[str, Any]] = None
+    subscription_details: Optional[Dict[str, Any]] = None
+    bundle_details: Optional[Dict[str, Any]] = None

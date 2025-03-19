@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from lookup_service.services.product_service import ProductService
-from lookup_service.models import Product
+from lookup_models import Product
 
 router = APIRouter()
 product_service = ProductService()
